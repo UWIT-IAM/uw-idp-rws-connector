@@ -1,0 +1,105 @@
+INSTALLATION
+===========
+
+This connector is for use with shibboleth IdP version 3.1.1
+
+
+2) Add the uw-idp-rws-connector-3.1.1.jar its dependencies to the IdP source
+   distribution's lib directory. (will end up in idp.war)
+
+   You need: rws-connector-1.1.jar, httpclient-4.x.x.jar, httpcore-4.x.x.jar
+
+
+3) Re-run the IdP install script to build and deploy the new WAR file.
+
+
+CONFIGURATION
+=============
+
+In the IdP's conf/attribute-resolver.xml
+
+1) add a namespace declaration to the document root element:
+
+      xmlns:uwdc="urn:mace:washington.edu:idp:resolver:dc"
+
+2) add an xsi:schemaLocation pair in the document root element:
+
+      urn:mace:washington.edu:idp:resolver:dc classpath:/schema/uw-rws-connector.xsd
+
+
+3) add a datasource bean definition to global.xml, e.g.
+
+   <bean id="GwsDataSource" class="edu.washington.shibboleth.attribute.resolver.dc.rws.HttpDataSource" destroy-method="close"
+       p:caCertificateFile="/data/local/idp-3.1.1/credentials/uwca.crt"
+       p:acceptHeader="text/xml" />
+
+   The parameters are optional.
+   
+   To use username/password authn add the parameters:
+      p:username="some_user"  p:password="some_passowrd"
+
+   To use x509 authn add the parameters:
+       p:certificateFile="path_to_your_pem_cert"
+       p:keyFile="path_to_your_pem_key"
+
+
+
+3) add a 'WebService' data connector definition 
+
+  (example, see below for element details) 
+
+  This example retrieves group memberships from our web service
+        see: https://wiki.cac.washington.edu/x/HiFy 
+
+------------------------------------------------------------------------
+    <resolver:DataConnector xsi:type="WebService" id="gws" xmlns="urn:mace:washington.edu:idp:resolver:dc"
+           baseURL="https://iam-ws.u.washington.edu:7443/"
+           authenticationType="CLIENT_CERT"
+           maxConnections="5"
+           maxResultSize="100"
+           mergeResults="true"
+           httpDataSourceRef="GwsDataSource"
+           
+        <QueryTemplate> 
+            <![CDATA[
+               group_sws/v1/search?member=${requestContext.principalName}&type=effective
+            ]]>
+        </QueryTemplate>
+
+        <Attribute name="memberOf" xPath="//*[@class='name']" />
+
+    </resolver:DataConnector>
+------------------------------------------------------------------------
+
+
+
+  a) authenticationType: can be NONE, BASIC, CLIENT_CERT
+
+     if BASIC you must supply username and password
+     if CLIENT_CERT you must supply AuthenticationCredential
+     if omitted type is guessed
+
+
+  b) The "baseURL" + "QueryTemplate" form the URL for the GET request
+
+
+  c) You can have as many "Attribute" elements as you like.  
+     Each retrieves one set of attributes from the returned document
+
+     The "name" is what you put in an attribute definition's sourceAttributeID.
+
+     The "xPath" is an XPath expression that identifies the elements 
+     containing data for "name".
+ 
+     You can include "maxResultSize" and "noResultIsError" attributes
+     in the Attribute element.
+
+
+
+COMPILING THE MODULE
+====================
+
+You have to have some 3.1.1 sources available to compile (see the pom.xml)
+TBD: add the list.
+
+

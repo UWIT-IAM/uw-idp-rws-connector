@@ -1,0 +1,2 @@
+urn\:mace\:washington\.edu\:idp\:resolver\:dc = edu.washington.shibboleth.attribute.resolver.spring.dc.UWDataConnectorNamespaceHandler
+
