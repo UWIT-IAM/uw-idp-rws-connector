@@ -13,6 +13,7 @@
 
 	<name>Shibboleth IdP :: RWS Attribute Resolver Implementation</name>
 	<artifactId>uw-idp-rws-connector</artifactId>
+        <version>1.4</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -20,22 +21,22 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>idp-attribute-api</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>idp-attribute-resolver-api</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>idp-attribute-resolver-spring</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>idp-authn-api</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
 		<dependency>
@@ -66,32 +67,32 @@
 		<!-- Test Dependencies -->
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>idp-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
 
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>idp-attribute-resolver-api</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>idp-saml-impl</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
 
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>idp-saml-impl</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 			<scope>test</scope>
 		</dependency>
 

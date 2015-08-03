@@ -151,16 +151,18 @@ public class HttpDataSource {
        /*
         * Create our client 
         */
-       HttpClientBuilder cb = HttpClients.custom().setConnectionManager(connectionManager);
-       // todo: keep alive
+
+       // HttpClientBuilder cb = HttpClients.custom().setConnectionManager(connectionManager);
+       HttpClientBuilder cb = HttpClientBuilder.create().setConnectionManager(connectionManager);
+       // requires lib 4.x
        // cb = cb.setConnectionManagerShared(true);
-       // add creds if provided
+
        if (username!=null && password!=null) {
           CredentialsProvider credsProvider = new BasicCredentialsProvider();
-          AuthScope authScope = new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT, AuthScope.ANY_REALM, "https"); 
           UsernamePasswordCredentials usernamePasswordCredentials = new UsernamePasswordCredentials(username, password);
-          credsProvider.setCredentials(authScope, usernamePasswordCredentials);
+          credsProvider.setCredentials(AuthScope.ANY, usernamePasswordCredentials);
           cb = cb.setDefaultCredentialsProvider(credsProvider);
+          log.info("HttpDataSource: added basic creds ");
        }
        httpClient = cb.build(); 
     }
