@@ -4,10 +4,10 @@ INSTALLATION
 This connector is for use with shibboleth IdP version 3.1.1
 
 
-2) Add the uw-idp-rws-connector-3.1.1.jar its dependencies to the IdP source
+2) Add the uw-idp-rws-connector-1.4.jar its dependencies to the IdP source
    distribution's lib directory. (will end up in idp.war)
 
-   You need: rws-connector-1.1.jar, httpclient-4.x.x.jar, httpcore-4.x.x.jar
+   You need: rws-connector-1.4.jar, httpclient-4.x.x.jar, httpcore-4.x.x.jar
 
 
 3) Re-run the IdP install script to build and deploy the new WAR file.
