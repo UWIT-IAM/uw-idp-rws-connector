@@ -195,6 +195,8 @@ public class HttpDataSource {
               HttpEntity entity = response.getEntity();
               if (entity != null) {
                   content = EntityUtils.toString(entity);
+                  log.trace("content dump:");
+                  log.trace(content);
               }
           } finally {
               response.close();
