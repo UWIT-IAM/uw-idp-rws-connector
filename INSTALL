@@ -7,7 +7,7 @@ This connector is for use with shibboleth IdP version 3.1.1
 2) Add the uw-idp-rws-connector-1.4.jar its dependencies to the IdP source
    distribution's lib directory. (will end up in idp.war)
 
-   You need: rws-connector-1.4.jar, httpclient-4.x.x.jar, httpcore-4.x.x.jar
+   You need: uw-idp-rws-connector-1.4.jar, httpclient-4.x.x.jar, httpcore-4.x.x.jar
 
 
 3) Re-run the IdP install script to build and deploy the new WAR file.
@@ -99,7 +99,20 @@ In the IdP's conf/attribute-resolver.xml
 COMPILING THE MODULE
 ====================
 
-You have to have some 3.1.1 sources available to compile (see the pom.xml)
+A working maven environment is required to build this connector.
+
+1) Pull the uw-idp-rws-connector project from Github.
+
+   git clone https://github.com/UWIT-IAM/uw-idp-rws-connector.git
+
+2) Change into the project directory and issue maven command to build.
+
+   cd uw-idp-rws-connector
+   mvn -DskipTests install
+
+If all goes well a target directory will be created with a jar file that
+you can install per the above method.
+
 TBD: add the list.
 
 
