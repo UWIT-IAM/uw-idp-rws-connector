@@ -37,9 +37,9 @@ import org.w3c.dom.Element;
 
 import net.shibboleth.ext.spring.util.SpringSupport;
 
-import net.shibboleth.idp.attribute.resolver.spring.dc.AbstractDataConnectorParser;
-import net.shibboleth.idp.attribute.resolver.spring.dc.CacheConfigParser;
-import net.shibboleth.idp.attribute.resolver.spring.dc.DataConnectorNamespaceHandler;
+import net.shibboleth.idp.attribute.resolver.spring.dc.impl.AbstractDataConnectorParser;
+import net.shibboleth.idp.attribute.resolver.spring.dc.impl.CacheConfigParser;
+import net.shibboleth.idp.attribute.resolver.spring.dc.impl.DataConnectorNamespaceHandler;
 import net.shibboleth.utilities.java.support.xml.ElementSupport;
 import net.shibboleth.utilities.java.support.logic.Constraint;
 import net.shibboleth.utilities.java.support.primitive.StringSupport;
