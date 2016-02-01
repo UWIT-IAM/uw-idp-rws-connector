@@ -45,25 +45,25 @@
         <dependency>
             <groupId>net.shibboleth.idp</groupId>
             <artifactId>idp-attribute-api</artifactId>
-            <version>3.1.1</version>
+            <version>3.2.1</version>
         </dependency>
 
         <dependency>
             <groupId>net.shibboleth.idp</groupId>
             <artifactId>idp-attribute-resolver-api</artifactId>
-            <version>3.1.1</version>
+            <version>3.2.1</version>
         </dependency>
 
         <dependency>
             <groupId>net.shibboleth.idp</groupId>
             <artifactId>idp-attribute-resolver-spring</artifactId>
-            <version>3.1.1</version>
+            <version>3.2.1</version>
         </dependency>
 
         <dependency>
             <groupId>net.shibboleth.idp</groupId>
             <artifactId>idp-authn-api</artifactId>
-            <version>3.1.1</version>
+            <version>3.2.1</version>
         </dependency>
 
         <dependency>
@@ -97,8 +97,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>
