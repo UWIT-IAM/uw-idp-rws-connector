@@ -1,6 +1,6 @@
-## webservice dataconnector for shib idp 3.2.1
+## webservice dataconnector for shib idp 3.2.x
 
-This dataconnector for shibboleth idp 3.2.1 retrieves data from a restful web service.
+This dataconnector for shibboleth idp 3.2.x retrieves data from a restful web service.
 
 * Authenticates with username/password or x509 ceritficate
 

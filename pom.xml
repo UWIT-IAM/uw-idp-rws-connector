@@ -6,7 +6,7 @@
     <name>Shibboleth IdP :: RWS Attribute Resolver Implementation</name>
     <artifactId>uw-idp-rws-connector</artifactId>
     <groupId>edu.washington.iam</groupId>
-    <version>1.4</version>
+    <version>1.4.1</version>
     <packaging>jar</packaging>
 
     <repositories>

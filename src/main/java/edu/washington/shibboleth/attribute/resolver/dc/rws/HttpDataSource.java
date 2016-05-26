@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.util.Date;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -138,7 +139,7 @@ public class HttpDataSource {
     /**
      * Initializes the connector and prepares it for use.
      */
-    public void initialize() {
+    public void initialize() throws IOException {
        log.info("HttpDataSource: initialize");
        
        SSLConnectionSocketFactory sf = getSocketFactory();
@@ -211,26 +212,37 @@ public class HttpDataSource {
     /**
      * Generate a socket factory using supplied key and trust stores 
      */
-    protected SSLConnectionSocketFactory getSocketFactory() {
-        KeyStore trustStore;
-        KeyStore keyStore;
+    protected SSLConnectionSocketFactory getSocketFactory() throws IOException {
         TrustManager[] trustManagers = null;
         KeyManager[] keyManagers = null;
         
         try {
            /* trust managers */
            if (caCertificateFile != null) {
-              log.info("setting trust in " + caCertificateFile);
+              KeyStore trustStore;
+              int cn = 0;
+
+              log.info("Setting x509 trust from " + caCertificateFile);
+
               TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-              X509Certificate cert = null;
-              if (caCertificateFile!=null) cert = readCertificateFile(caCertificateFile);
-              log.debug("init trust mgr " + cert);
+              CertificateFactory cf = CertificateFactory.getInstance("X.509");
+              FileInputStream in = new FileInputStream(caCertificateFile);
+              Collection certs = cf.generateCertificates(in);
+
               trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
               trustStore.load(null, null);
-              trustStore.setCertificateEntry("CACERT", cert);
+
+              Iterator cit = certs.iterator();
+              while (cit.hasNext()) {
+                 X509Certificate cert = (X509Certificate) cit.next();
+                 log.info(" adding " + cert.getSubjectX500Principal().toString());
+                 System.out.println(" adding " + cert.getSubjectX500Principal().toString());
+                 trustStore.setCertificateEntry("CACERT" + cn, cert);
+                 cn += 1;
+              }
               tmf.init(trustStore);
               trustManagers = tmf.getTrustManagers();
-           } else {
+           } else {  // no verification
               trustManagers = new TrustManager[] { new X509TrustManager() {
                  public X509Certificate[] getAcceptedIssuers() {
                      return null;
@@ -248,11 +260,14 @@ public class HttpDataSource {
 
            /* key manager */
            if (certificateFile != null && keyFile != null) {
+               KeyStore keyStore;
                KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
                keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
                keyStore.load(null, null);
 
-               X509Certificate cert = readCertificateFile(certificateFile);
+               FileInputStream in = new FileInputStream(certificateFile);
+               CertificateFactory cf = CertificateFactory.getInstance("X.509");
+               X509Certificate cert = (X509Certificate) cf.generateCertificate(in);
                PKCS1 pkcs = new PKCS1();
                log.info("reading key file: " + keyFile);
                PrivateKey key = pkcs.readKey(keyFile);
@@ -271,9 +286,9 @@ public class HttpDataSource {
            return new SSLConnectionSocketFactory(ctx);
 
         } catch (IOException e) {
-              log.error("sf error: " + e);
+           log.error("error reading cert or key error: " + e);
         } catch (KeyStoreException e) {
-              log.error("sf error: " + e);
+           log.error("keystore error: " + e);
         } catch (NoSuchAlgorithmException e) {
            log.error("sf error: " + e);
         } catch (KeyManagementException e) {
@@ -286,27 +301,6 @@ public class HttpDataSource {
 
         return null;
 
-    }
-
-    /* get a certificate from a PEM file */
-    protected X509Certificate readCertificateFile(String filename) {
-        log.info("reading cert file: " + filename);
-        FileInputStream file;
-        X509Certificate cert;
-        try {
-            file = new FileInputStream(filename);
-        } catch (IOException e) {
-            log.error("ldap source bad cert file: " + e);
-            return null;
-        }
-        try {
-            CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            cert = (X509Certificate) cf.generateCertificate(file);
-        } catch (CertificateException e) {
-            log.error("ldap source bad cert: " + e);
-            return null;
-        }
-        return cert;
     }
 
 
