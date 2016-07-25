@@ -291,10 +291,11 @@ public class RwsDataConnector extends AbstractDataConnector {
       try {
         String xml = httpDataSource.getResource(baseUrl + queryString);
 
-        /** Java 7 documentation removed the thread warnings from DocumentBuilderFactory and DocumentBuilder.
-            If these are still not thread safe this parsing should be synchronized. */
-
-        Document doc = documentBuilder.parse(new InputSource(new StringReader(xml)));
+        /** The parser needs to be synchronized **/
+        Document doc = null;
+        synchronized(this) {
+                doc = documentBuilder.parse(new InputSource(new StringReader(xml)));
+        }
 
         Map<String, IdPAttribute> attributes = new HashMap<String, IdPAttribute>();
 
