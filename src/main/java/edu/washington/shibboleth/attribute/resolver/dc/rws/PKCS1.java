@@ -109,13 +109,13 @@ class PKCS1 {
 	}
 	char[] readWrappedBody(String name) throws IOException {
 		FileReader file = new FileReader(name);
-		char[] ba = new char[2048];
+		char[] ba = new char[20480];
 		int i;
                 StringBuffer banner = null;
 		boolean bnl = false;
 		boolean knl = false;
         try {
-		for (i = 0; i < 2048; ) {
+		for (i = 0; i < 20480; ) {
 			int ic = file.read();
 			char c = (char) ic;
 			if (ic < 0) break;
