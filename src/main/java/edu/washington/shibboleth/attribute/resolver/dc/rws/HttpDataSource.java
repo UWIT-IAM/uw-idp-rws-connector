@@ -73,6 +73,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.params.BasicHttpParams;
 
 import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ClientConnectionManager;
@@ -143,7 +144,10 @@ public class HttpDataSource {
        log.info("HttpDataSource: initialize");
        
        SSLConnectionSocketFactory sf = getSocketFactory();
-       Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create().register("https", sf).build();
+       Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
+         .register("https", sf)
+         .register("http", PlainConnectionSocketFactory.INSTANCE)
+         .build();
 
        connectionManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
        connectionManager.setMaxTotal(maxConnections);
