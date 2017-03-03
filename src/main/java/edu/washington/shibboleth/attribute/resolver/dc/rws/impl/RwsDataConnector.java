@@ -151,7 +151,7 @@ public class RwsDataConnector extends AbstractDataConnector {
     private TemplatedQueryStringBuilder queryStringBuilder;
 
     /** Authentication type */
-    private AUTHENTICATION_TYPE authenticationType;
+    private AUTHENTICATION_TYPE authenticationType = AUTHENTICATION_TYPE.NONE;
 
     /** Username if basic auth */
     private String username;

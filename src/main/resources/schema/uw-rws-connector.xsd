@@ -150,7 +150,7 @@
                         </documentation>
                     </annotation>
                 </attribute>
-                <attribute name="authenticationType" type="uwdc:AuthenticationType" use="required">
+                <attribute name="authenticationType" type="uwdc:AuthenticationType">
                     <annotation>
                         <documentation>
                             The authentication type. Acceptable values are NONE, BASIC, CLIENT_CERT

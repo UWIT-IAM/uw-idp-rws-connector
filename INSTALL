@@ -72,15 +72,26 @@ In the IdP's conf/attribute-resolver.xml
         <Attribute name="memberOf" xPath="//*[@class='name']" />
 
     </resolver:DataConnector>
-------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+Note.  If you use a default namespace convention for the resolver, the notation
+ 
+  <DataConnector xsi:type="WebService" ...
 
+won't work.  Instead add an alias to your AttributeResolver definition:
 
+  xmlns:resolver="urn:mace:shibboleth:2.0:resolver"
+
+and specify that on the connector definition:
+
+  <resolver:DataConnector xsi:type="WebService" ...
+
+--------------------------------------------------------------------------------
 
   a) authenticationType: can be NONE, BASIC, CLIENT_CERT
 
      if BASIC you must supply username and password
      if CLIENT_CERT you must supply AuthenticationCredential
-     if omitted type is guessed
+     if omitted type is NONE
 
 
   b) The "baseURL" + "QueryTemplate" form the URL for the GET request
