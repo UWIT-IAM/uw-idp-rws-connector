@@ -188,8 +188,6 @@ public class RwsDataConnectorParser extends AbstractDataConnectorParser {
             }
 
             templateBuilder.addPropertyValue("templateText", filter);
-            System.out.println("adding templateText: " + filter);
-
             return templateBuilder.getBeanDefinition();
         }
 
